@@ -1,8 +1,35 @@
 # EventBridge
 Like EventBus &amp; RxBus for android, But so tiny and faster.
 
-# 使用方法
+## 一、 使用方法
+> (1) 绑定方法
 ```java
+    public void onCreate() {
+        super.onCreate();
+        // 绑定默认的（未指定名字的）方法
+        Bridge.getDefault().bind(this, data -> {
+            Log.v("Mservice-MSG", data.toString());
+        });
+        // 指定名字并绑定方法
+        Bridge.getDefault().bind(this, "hello", data -> {
+            Log.v("Mservice-MSG", data.toString());
+        });
+        // 绑定默认的（未指定名字的）方法，且为sticky方式
+        Bridge.getDefault().bindSticky(this, data -> {
+            Log.v("Mservice-MSG", data.toString());
+        });
+        // 绑定默认的（未指定名字的）方法，且为sticky方式
+        Bridge.getDefault().bindSticky(this, "hello", data -> {
+            Log.v("Mservice-MSG", data.toString());
+        });
+   }
+```
+> (2) 发送数据
+```java
+@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         // 给指定名字的绑定者发送数据
         // sticky 方式
         // postSticky和post是两种不同的发送方式，因此没有使用post方式绑定的绑定者无法收到发送过去的数据，反之一样
@@ -21,4 +48,13 @@ Like EventBus &amp; RxBus for android, But so tiny and faster.
         // 给未指定名字的绑定者发送数据。指定了名字的绑定者接收不到信息，反之一样
         // 非sticky 方式
         Bridge.getDefault().post("我很好。");
+   }
+```
+> (3) 解除EventBridge
+```java
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Bridge.getDefault().destroyBridge(this);
+    }
 ```
