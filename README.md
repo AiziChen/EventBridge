@@ -42,7 +42,7 @@ Like EventBus &amp; RxBus for android, But so tiny and faster.
         // sticky 方式
         Bridge.getDefault().postSticky("I'm fine.");
 
-        // 启动服务（此服务在onCreate方法内绑定了4个方法-第一步）
+        // 启动服务（此服务在onCreate方法内绑定了4个方法-步骤1）
         startService(new Intent(this, MService.class));
 
         // 给指定名字的绑定者发送数据
