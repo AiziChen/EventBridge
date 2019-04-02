@@ -2,6 +2,8 @@
 Like EventBus &amp; RxBus for android, But so tiny and faster.
 
 ## **使用方法**
+> (0) 作为model
+下载并设为Android Studio项目的model，接着在主项目的gradle配置文件中引用它。
 > (1) 绑定方法
 ```java
     public void onCreate() {
