@@ -1,5 +1,5 @@
 # EventBridge
-Like EventBus &amp; RxBus for android, But so tiny and faster.
+Like EventBus &amp; RxBus for android, And more tiny and faster.
 
 ## **使用方法**
 > (0) 作为model
