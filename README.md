@@ -1,7 +1,7 @@
 # EventBridge
 Like EventBus &amp; RxBus for android, But so tiny and faster.
 
-## 一、 使用方法
+## **使用方法**
 > (1) 绑定方法
 ```java
     public void onCreate() {
