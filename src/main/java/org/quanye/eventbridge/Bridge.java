@@ -93,9 +93,7 @@ public class Bridge {
         boolean flag = false;
         for (TargetBinder tb : stickyBinders) {
             if (tb.getName().equals(BINDER_DEFAULT_NAME)) {
-                new Handler().post(() -> {
-                    tb.getBinder().onReceive(data);
-                });
+                tb.getBinder().onReceive(data);
                 flag = true;
             }
         }
@@ -115,9 +113,7 @@ public class Bridge {
         boolean flag = false;
         for (TargetBinder tb : stickyBinders) {
             if (tb.getName().equals(name)) {
-                new Handler().post(() -> {
-                    tb.getBinder().onReceive(data);
-                });
+                tb.getBinder().onReceive(data);
                 flag = true;
             }
         }
@@ -139,9 +135,7 @@ public class Bridge {
         while (tpitor.hasNext()) {
             TargetPoster tp = tpitor.next();
             if (tp.getName().equals(BINDER_DEFAULT_NAME)) {
-                new Handler().post(() -> {
-                    tb.getBinder().onReceive(tp.getData());
-                });
+                tb.getBinder().onReceive(tp.getData());
             }
         }
     }
@@ -160,9 +154,7 @@ public class Bridge {
         while (tpitor.hasNext()) {
             TargetPoster tp = tpitor.next();
             if (tp.getName().equals(name)) {
-                new Handler().post(() -> {
-                    tb.getBinder().onReceive(tp.getData());
-                });
+                tb.getBinder().onReceive(tp.getData());
             }
         }
     }
