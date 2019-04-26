@@ -67,6 +67,7 @@ Like EventBus &amp; RxBus for android, And more tiny and faster.
 `Bridge不支持跨进程通信，跨进程通信需要使用 ProcessBridge。`
 `当然ProcessBridge 也支持同一进程通信，只是性能比 Bridge差，因此同一进程通信时一般使用 Bridge。`
 ```java
+    @Override
     protected void onCreate() {
         super.onCreate();
         // 绑定具有默认名字的binder
