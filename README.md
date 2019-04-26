@@ -75,10 +75,10 @@ Like EventBus &amp; RxBus for android, And more tiny and faster.
             Log.d("Message", (String)data);
         });
     }
-    // 解除EventBridge
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // 解除EventBridge
         Bridge.getDefault().destroyBridge(this);
     }
     
