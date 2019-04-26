@@ -54,7 +54,7 @@ Like EventBus &amp; RxBus for android, And more tiny and faster.
         Bridge.getDefault().post("我很好。");
    }
 ```
-> (3) 解除EventBridge
+> (3) 解除Bridge
 ```java
     @Override
     public void onDestroy() {
@@ -78,7 +78,7 @@ Like EventBus &amp; RxBus for android, And more tiny and faster.
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // 解除EventBridge
+        // 解除ProcessBridge
         Bridge.getDefault().destroyBridge(this);
     }
     
