@@ -68,7 +68,7 @@ Bridge不支持跨进程通信，跨进程通信需要使用 ProcessBridge。
 ```java
         protected void onCreate() {
             super.onCreate();
-            // 绑定具有默认名字的binder，
+            // 绑定具有默认名字的binder
             ProcessBridge.getDefault().bind(this.getApplicationContext(), data - > {
                 Log.d("Message", (String)data);
             });
