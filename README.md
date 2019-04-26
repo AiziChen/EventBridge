@@ -71,7 +71,7 @@ Like EventBus &amp; RxBus for android, And more tiny and faster.
     protected void onCreate() {
         super.onCreate();
         // 绑定具有默认名字的binder
-        ProcessBridge.getDefault().bind(this.getApplicationContext(), data - > {
+        ProcessBridge.getDefault().bind(this.getApplicationContext(), data -> {
             Log.d("Message", (String)data);
         });
     }
