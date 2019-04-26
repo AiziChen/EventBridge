@@ -1,15 +1,9 @@
 package org.quanye.eventbridge;
 
-<<<<<<< HEAD
 import org.jetbrains.annotations.NotNull;
 import org.quanye.eventbridge.bridger.Binder;
 import org.quanye.eventbridge.normal.TargetBinder;
 import org.quanye.eventbridge.normal.TargetPoster;
-=======
-import android.os.Handler;
-
-import org.jetbrains.annotations.NotNull;
->>>>>>> refs/remotes/master/master
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -47,13 +41,7 @@ public class Bridge {
     public void post(Object data) {
         for (TargetBinder tb : binders) {
             if (tb.getName().equals(BINDER_DEFAULT_NAME)) {
-<<<<<<< HEAD
                 tb.getBinder().onReceive(data);
-=======
-                new Handler().post(() -> {
-                    tb.getBinder().onReceive(data);
-                });
->>>>>>> refs/remotes/master/master
             }
         }
     }
@@ -67,13 +55,7 @@ public class Bridge {
     public void post(@NotNull String name, Object data) {
         for (TargetBinder tb : binders) {
             if (tb.getName().equals(name)) {
-<<<<<<< HEAD
                 tb.getBinder().onReceive(data);
-=======
-                new Handler().post(() -> {
-                    tb.getBinder().onReceive(data);
-                });
->>>>>>> refs/remotes/master/master
             }
         }
     }
