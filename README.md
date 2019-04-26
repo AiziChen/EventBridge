@@ -82,7 +82,7 @@ Like EventBus &amp; RxBus for android, And more tiny and faster.
         Bridge.getDefault().destroyBridge(this);
     }
     
-    /* 接着在另一进程中,向绑定了的默认名字的绑定者发送数据。（注意：需要使用SerialData类对传输的数据进行封装！）*/
+    /* 接着在另一进程中,向绑定了默认名字的绑定者发送数据。（注意：需要使用SerialData类对传输的数据进行封装！）*/
     ProcessBridge.getDefault().postSticky(this, new SerialData("Hello,DavidChen!"));
     // ProcessBridge同时支持sticky和指定名字的方式进行通信
 ```
