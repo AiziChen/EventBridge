@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.quanye.eventbridge" />
+    package="org.quanye.eventbridge" >
+
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+</manifest>

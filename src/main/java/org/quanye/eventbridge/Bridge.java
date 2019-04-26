@@ -1,16 +1,17 @@
 package org.quanye.eventbridge;
 
-import android.os.Handler;
-import android.util.Log;
+import org.jetbrains.annotations.NotNull;
+import org.quanye.eventbridge.bridger.Binder;
+import org.quanye.eventbridge.normal.TargetBinder;
+import org.quanye.eventbridge.normal.TargetPoster;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import androidx.annotation.NonNull;
-
 /**
  * EventBridge Project
  * The Bridge Class
+ *
  * @author Quanyec
  */
 public class Bridge {
@@ -20,7 +21,8 @@ public class Bridge {
     private LinkedList<TargetBinder> stickyBinders = new LinkedList<>();
     private LinkedList<TargetPoster> stickyPosters = new LinkedList<>();
 
-    private Bridge() {}
+    private Bridge() {
+    }
 
     public static synchronized Bridge getDefault() {
         if (instance == null) {
@@ -39,9 +41,7 @@ public class Bridge {
     public void post(Object data) {
         for (TargetBinder tb : binders) {
             if (tb.getName().equals(BINDER_DEFAULT_NAME)) {
-                new Handler().post(() -> {
-                    tb.getBinders().get().onReceive(data);
-                });
+                tb.getBinder().onReceive(data);
             }
         }
     }
@@ -52,13 +52,10 @@ public class Bridge {
      * @param name
      * @param data
      */
-    public void post(@NonNull String name, Object data) {
+    public void post(@NotNull String name, Object data) {
         for (TargetBinder tb : binders) {
             if (tb.getName().equals(name)) {
-                new Handler().post(() -> {
-                    tb.getBinders()
-                            .get().onReceive(data);
-                });
+                tb.getBinder().onReceive(data);
             }
         }
     }
@@ -69,9 +66,7 @@ public class Bridge {
      * @param binder
      */
     public void bind(Object target, Binder binder) {
-        ThreadLocal<Binder> local = new ThreadLocal<>();
-        local.set(binder);
-        binders.add(new TargetBinder(BINDER_DEFAULT_NAME, target, local));
+        binders.add(new TargetBinder(BINDER_DEFAULT_NAME, target, binder));
     }
 
     /**
@@ -80,13 +75,9 @@ public class Bridge {
      * @param name
      * @param binder
      */
-    public void bind(Object target, @NonNull String name, Binder binder) {
-        ThreadLocal<Binder> local = new ThreadLocal<>();
-        local.set(binder);
-        binders.add(new TargetBinder(name, target, local));
+    public void bind(Object target, @NotNull String name, Binder binder) {
+        binders.add(new TargetBinder(name, target, binder));
     }
-
-
 
 
     /**
@@ -99,10 +90,7 @@ public class Bridge {
         boolean flag = false;
         for (TargetBinder tb : stickyBinders) {
             if (tb.getName().equals(BINDER_DEFAULT_NAME)) {
-                new Handler().post(() -> {
-                    tb.getBinders()
-                            .get().onReceive(data);
-                });
+                tb.getBinder().onReceive(data);
                 flag = true;
             }
         }
@@ -117,15 +105,12 @@ public class Bridge {
      * @param name
      * @param data
      */
-    public synchronized void postSticky(@NonNull String name, Object data) {
+    public synchronized void postSticky(@NotNull String name, Object data) {
         stickyPosters.add(new TargetPoster(name, data));
         boolean flag = false;
         for (TargetBinder tb : stickyBinders) {
             if (tb.getName().equals(name)) {
-                new Handler().post(() -> {
-                    tb.getBinders()
-                            .get().onReceive(data);
-                });
+                tb.getBinder().onReceive(data);
                 flag = true;
             }
         }
@@ -140,19 +125,14 @@ public class Bridge {
      * @param binder
      */
     public void bindSticky(Object target, Binder binder) {
-        ThreadLocal<Binder> local = new ThreadLocal<>();
-        local.set(binder);
-        TargetBinder tb = new TargetBinder(BINDER_DEFAULT_NAME, target, local);
+        TargetBinder tb = new TargetBinder(BINDER_DEFAULT_NAME, target, binder);
         stickyBinders.add(tb);
         // 实现sticky功能
         Iterator<TargetPoster> tpitor = stickyPosters.iterator();
         while (tpitor.hasNext()) {
             TargetPoster tp = tpitor.next();
             if (tp.getName().equals(BINDER_DEFAULT_NAME)) {
-                new Handler().post(() -> {
-                    tb.getBinders()
-                            .get().onReceive(tp.getData());
-                });
+                tb.getBinder().onReceive(tp.getData());
             }
         }
     }
@@ -163,20 +143,15 @@ public class Bridge {
      * @param name
      * @param binder
      */
-    public void bindSticky(Object target, @NonNull String name, Binder binder) {
-        ThreadLocal<Binder> local = new ThreadLocal<>();
-        local.set(binder);
-        TargetBinder tb = new TargetBinder(name, target, local);
+    public void bindSticky(Object target, @NotNull String name, Binder binder) {
+        TargetBinder tb = new TargetBinder(name, target, binder);
         stickyBinders.add(tb);
         // 实现sticky功能
         Iterator<TargetPoster> tpitor = stickyPosters.iterator();
         while (tpitor.hasNext()) {
             TargetPoster tp = tpitor.next();
             if (tp.getName().equals(name)) {
-                new Handler().post(() -> {
-                    tb.getBinders()
-                            .get().onReceive(tp.getData());
-                });
+                tb.getBinder().onReceive(tp.getData());
             }
         }
     }
@@ -195,7 +170,7 @@ public class Bridge {
             }
         }
         Iterator<TargetBinder> sbitor = stickyBinders.iterator();
-        while(sbitor.hasNext()) {
+        while (sbitor.hasNext()) {
             TargetBinder tb = sbitor.next();
             if (tb.getTarget() == target) {
                 sbitor.remove();

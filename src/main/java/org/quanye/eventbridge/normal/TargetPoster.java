@@ -1,4 +1,4 @@
-package org.quanye.eventbridge;
+package org.quanye.eventbridge.normal;
 
 /**
  * TargetPoster

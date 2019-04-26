@@ -1,4 +1,6 @@
-package org.quanye.eventbridge;
+package org.quanye.eventbridge.normal;
+
+import org.quanye.eventbridge.bridger.Binder;
 
 /**
  * TargetBinder
@@ -6,14 +8,14 @@ package org.quanye.eventbridge;
  */
 public class TargetBinder {
     private String name;
-    private ThreadLocal<Binder> binders;
+    private Binder binder;
     // 该TargetBinder是属于哪个对象创建的
     private Object target;
 
-    public TargetBinder(String name, Object target, ThreadLocal<Binder> binders) {
+    public TargetBinder(String name, Object target, Binder binder) {
         this.name = name;
         this.target = target;
-        this.binders = binders;
+        this.binder = binder;
     }
 
     public TargetBinder() {
@@ -27,12 +29,12 @@ public class TargetBinder {
         this.name = name;
     }
 
-    public ThreadLocal<Binder> getBinders() {
-        return binders;
+    public Binder getBinder() {
+        return binder;
     }
 
-    public void setBinders(ThreadLocal<Binder> binders) {
-        this.binders = binders;
+    public void setBinder(Binder binder) {
+        this.binder = binder;
     }
 
     public Object getTarget() {
