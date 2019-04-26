@@ -79,7 +79,7 @@ Like EventBus &amp; RxBus for android, And more tiny and faster.
     public void onDestroy() {
         super.onDestroy();
         // 解除ProcessBridge
-        Bridge.getDefault().destroyBridge(this);
+        ProcessBridge.getDefault().destroyBridge(this);
     }
     
     /* 接着在另一进程中,向绑定了默认名字的绑定者发送数据。（注意：需要使用SerialData类对传输的数据进行封装！）*/
