@@ -3,6 +3,7 @@ package org.quanye.eventbridge.process;
 import java.io.Serializable;
 
 public class SerialData implements Serializable {
+
     private Object data;
 
     public SerialData(Object data) {

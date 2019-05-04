@@ -54,11 +54,35 @@ Like EventBus &amp; RxBus for android, And more tiny and faster.
         Bridge.getDefault().post("我很好。");
    }
 ```
-> (3) 解除EventBridge
+> (3) 解除Bridge
 ```java
     @Override
     public void onDestroy() {
         super.onDestroy();
         Bridge.getDefault().destroyBridge(this);
     }
+```
+> (4) 跨进程通信
+
+`Bridge不支持跨进程通信，跨进程通信需要使用 ProcessBridge。`
+`当然ProcessBridge 也支持同一进程通信，只是性能比 Bridge差，因此同一进程通信时一般使用 Bridge。`
+```java
+    @Override
+    protected void onCreate() {
+        super.onCreate();
+        // 绑定具有默认名字的binder
+        ProcessBridge.getDefault().bind(this.getApplicationContext(), data -> {
+            Log.d("Message", (String)data);
+        });
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // 解除ProcessBridge
+        ProcessBridge.getDefault().destroyBridge(this.getApplicationContext());
+    }
+    
+    /* 接着在另一进程中,向绑定了默认名字的绑定者发送数据。（注意：需要使用SerialData类对传输的数据进行封装！）*/
+    ProcessBridge.getDefault().postSticky(this, new SerialData("Hello,DavidChen!"));
+    // ProcessBridge同时支持sticky和指定名字的方式进行通信
 ```

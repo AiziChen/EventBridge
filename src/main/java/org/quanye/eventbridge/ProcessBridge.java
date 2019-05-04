@@ -58,16 +58,18 @@ public class ProcessBridge {
     }
 
     public void bind(Context ctx, String name, Binder binder) {
+        name = STICKY_NAME_PREFIX + "." + name;
         MReceiver receiver = new MReceiver();
-        IntentFilter filter = new IntentFilter(name);
+        IntentFilter filter = new IntentFilter(BINDER_DEFAULT_ACTION);
         ctx.registerReceiver(receiver, filter);
         receivers.add(new ProcessTargetBinder(receiver, ctx, binder, name));
     }
 
     public void post(Context ctx, String name, SerialData data) {
+        name = STICKY_NAME_PREFIX + "." + name;
         for (ProcessTargetBinder rtb : receivers) {
             if (rtb.getName().equals(name)) {
-                Intent intent = new Intent(name);
+                Intent intent = new Intent(BINDER_DEFAULT_ACTION);
                 intent.putExtra(MReceiver.MRECEIVE_DATA, data);
                 intent.putExtra(MReceiver.MRECEIVE_BINDER, rtb.getBinder());
                 ctx.sendBroadcast(intent);
@@ -96,7 +98,7 @@ public class ProcessBridge {
     public void bindSticky(Context ctx, String name, Binder binder) {
         name = STICKY_NAME_PREFIX + "." + name;
         MReceiver receiver = new MReceiver();
-        IntentFilter filter = new IntentFilter(name);
+        IntentFilter filter = new IntentFilter(BINDER_DEFAULT_ACTION);
         ctx.registerReceiver(receiver, filter);
         receivers.add(new ProcessTargetBinder(receiver, ctx, binder, name));
     }
@@ -105,7 +107,7 @@ public class ProcessBridge {
         name = STICKY_NAME_PREFIX + "." + name;
         for (ProcessTargetBinder rtb : receivers) {
             if (rtb.getName().equals(name)) {
-                Intent intent = new Intent(name);
+                Intent intent = new Intent(BINDER_DEFAULT_ACTION);
                 intent.putExtra(MReceiver.MRECEIVE_DATA, data);
                 intent.putExtra(MReceiver.MRECEIVE_BINDER, rtb.getBinder());
                 ctx.sendStickyBroadcast(intent);
